@@ -1,30 +1,29 @@
 #include "raylib.h"
 #include "Math.h"
 
+const int LEGS_COUNT = 4;
+
 class Table 
 {
 public:
     float width, height;
-    int legs; 
+    float legs[LEGS_COUNT];
     float legWidth, legHeight;
     float weight;
     float r, g, b;
     float x, y;
-    Color color;
+
+    Color legsColor, topColor;
 
     void Draw()
     {
         //top
-        DrawRectangle(x, y, width, height, color);
-
-        float spacing = width / legs;
-        float legX = x;
-
+        DrawRectangle(x, y, width, height, BROWN);
         //legs
-        for (int i = 0; i < legs; i++) {
-            DrawRectangle(legX, y, legWidth, legHeight, color);
-            legX += spacing;
+        for (int i = 0; i < LEGS_COUNT; i++) {
+            DrawRectangle(legs[i], y, legWidth, legHeight, legsColor);
         }
+
     }
 };
 
@@ -42,14 +41,18 @@ int main()
     woodTable.height = 60.0f;
     woodTable.weight = 40.0f;
 
-    woodTable.height = 50.0f;
+    woodTable.height = 60.0f;
     woodTable.width = 200.0f;
     woodTable.x = screenWidth * 0.5f - woodTable.width * 0.5f;
     woodTable.y = screenHeight * 0.75f - woodTable.height;
-    woodTable.legs = 4;
-    woodTable.legWidth = 200.0f;
-    woodTable.legHeight = 60.0f;
-    woodTable.color = BLACK;
+    woodTable.legWidth = 10.0f;
+    woodTable.legHeight = woodTable.height * 3.0f;
+    woodTable.legsColor = BLACK;
+    woodTable.topColor = BROWN;
+    woodTable.legs[0] = woodTable.x;
+    woodTable.legs[1] = woodTable.x + woodTable.legWidth * 3.0f;
+    woodTable.legs[2] = woodTable.x + woodTable.width - woodTable.legWidth * 3.0f;
+    woodTable.legs[3] = woodTable.x + woodTable.width - woodTable.legWidth;
 
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
